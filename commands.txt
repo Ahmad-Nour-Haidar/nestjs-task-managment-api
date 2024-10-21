@@ -17,3 +17,4 @@ npm init --yes
 ///////
 
 yarn add uuid
+yarn add class-validator class-transformer
