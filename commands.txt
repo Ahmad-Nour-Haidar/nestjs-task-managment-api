@@ -12,3 +12,8 @@ npm init --yes
 ✏️	Rename / move a file(s) / folder(s)
 ✏️	Move files
 ✏️	Move folder
+
+
+///////
+
+yarn add uuid
