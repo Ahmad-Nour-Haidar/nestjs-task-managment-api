@@ -1,17 +1,17 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import { Task } from './task.entity';
+import { CreateTaskDto } from './dto/create-task.dto';
 
 @Controller('tasks')
 export class TasksController {
   constructor(private readonly tasksService: TasksService) {}
 
-  //
-  // @Post()
-  // create(@Body() createUserDto: CreateTaskDto) {
-  //   return this.tasksService.create(createUserDto);
-  // }
-  //
+  @Post()
+  create(@Body() createUserDto: CreateTaskDto): Promise<Task> {
+    return this.tasksService.create(createUserDto);
+  }
+
   // @Get()
   // findAll(@Query() filterDto: GetTasksFilterDto): Task[] {
   //   if (Object.keys(filterDto).length > 0) {
