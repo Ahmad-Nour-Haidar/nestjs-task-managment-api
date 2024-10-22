@@ -54,12 +54,16 @@ export class TasksService {
     return task;
   }
 
-  // async updateTaskStatus(id: string, status: TaskStatus): Promise<Task> {
-  //   const task = await this.findOne(id);
-  //   task.status = status;
-  //   await this.taskRepository.save(task);
-  //   return task;
-  // }
+  async updateTaskStatus(
+    id: string,
+    status: TaskStatus,
+    user: User,
+  ): Promise<Task> {
+    const task = await this.findOne(id, user);
+    task.status = status;
+    await this.taskRepository.save(task);
+    return task;
+  }
 
   async remove(id: string): Promise<void> {
     const result = await this.taskRepository.delete(id);
