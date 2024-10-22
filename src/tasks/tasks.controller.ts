@@ -33,8 +33,11 @@ export class TasksController {
   }
 
   @Get()
-  findAll(@Query() filterDto: GetTasksFilterDto): Promise<Task[]> {
-    return this.tasksService.findAll(filterDto);
+  findAll(
+    @Query() filterDto: GetTasksFilterDto,
+    @GetUser() user: User,
+  ): Promise<Task[]> {
+    return this.tasksService.findAll(filterDto, user);
   }
 
   @Get(':id')

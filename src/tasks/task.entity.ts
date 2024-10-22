@@ -1,4 +1,10 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { TaskStatus } from './task-status.enum';
 import { Exclude } from 'class-transformer';
 import { User } from '../auth/user.entity';
@@ -17,8 +23,13 @@ export class Task {
   @Column()
   status: TaskStatus;
 
-  @ManyToOne((_type) => User, (user) => user.tasks, { eager: false })
-  @Exclude()
-  // @Exclude({ toPlainOnly: true })
+  // Create a user_id column in the tasks table
+  @Column({ name: 'user_id' })
+  user_id: string;
+
+  // Define the relationship with the User entity
+  @ManyToOne(() => User, (user) => user.tasks, { eager: false })
+  @JoinColumn({ name: 'user_id' }) // Explicitly name the foreign key column
+  @Exclude() // Exclude the user object from the response
   user: User;
 }
