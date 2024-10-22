@@ -19,3 +19,4 @@ npm init --yes
 yarn add uuid
 yarn add class-validator class-transformer
 yarn add typeorm @nestjs/typeorm pg
+yarn add bcrypt
