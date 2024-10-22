@@ -21,3 +21,4 @@ yarn add class-validator class-transformer
 yarn add typeorm @nestjs/typeorm pg
 yarn add bcrypt
 yarn add @nestjs/jwt @nestjs/passport passport passport-jwt
+yarn add @types/passport-jwt
