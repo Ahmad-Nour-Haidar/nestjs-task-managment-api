@@ -13,6 +13,8 @@ npm init --yes
 ✏️	Move files
 ✏️	Move folder
 
+export STAGE=dev
+yarn start:prod
 
 ///////
 
@@ -23,3 +25,6 @@ yarn add bcrypt
 yarn add @nestjs/jwt @nestjs/passport passport passport-jwt
 yarn add @types/passport-jwt
 yarn add @types/config
+yarn add @hapi/joi
+yarn add -D @types/hapi__joi
+yarn add joi
