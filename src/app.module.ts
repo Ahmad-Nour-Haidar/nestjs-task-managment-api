@@ -3,16 +3,19 @@ import { TasksModule } from './tasks/tasks.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { configValidationSchema } from './config.schema';
+import { validationSchema } from './config/validation';
 
 @Module({
   imports: [
+    // Load the configuration from .env file based on NODE_ENV
     ConfigModule.forRoot({
-      // envFilePath: `.dev.env`,
-      validationSchema: configValidationSchema,
-      // ignoreEnvFile: true,
+      envFilePath: `${process.cwd()}/src/config/env/${process.env.NODE_ENV}.env`,
+      isGlobal: true,
+      validationSchema,
+      // load: [configuration],
     }),
-    TasksModule,
+
+    // TypeORM configuration with async factory to load DB connection details
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -30,17 +33,19 @@ import { configValidationSchema } from './config.schema';
         // logger.debug(`Database Password: ${configService.get('DB_PASSWORD')}`); // Be careful with passwords!
 
         return {
+          // type: configService.get<string>('DB_TYPE'),
           type: 'postgres',
           host: configService.get<string>('DB_HOST'),
           port: configService.get<number>('DB_PORT'),
           username: configService.get<string>('DB_USERNAME'),
           password: configService.get<string>('DB_PASSWORD'),
           database: configService.get<string>('DB_DATABASE'),
+          synchronize: configService.get<boolean>('TYPEORM_SYNCHRONIZE'),
           autoLoadEntities: true,
-          synchronize: true,
         };
       },
     }),
+    TasksModule,
     AuthModule,
   ],
 })
